@@ -36,13 +36,13 @@ func Load() *Config {
 
 	cfg := Config{}
 
-	cfg.AUTH_ROUTER_PORT = cast.ToString(coalesce("AUTH_ROUTER_PORT", ":8081"))
-	cfg.AUTH_SERVICE_PORT = cast.ToString(coalesce("AUTH_SERVICE_PORT", ":50051"))
-	cfg.DB_HOST = cast.ToString(coalesce("DB_HOST", "localhost"))
+	cfg.AUTH_ROUTER_PORT = cast.ToString(coalesce("AUTH_ROUTER_PORT", "auth:8081"))
+	cfg.AUTH_SERVICE_PORT = cast.ToString(coalesce("AUTH_SERVICE_PORT", "auth:50051"))
+	cfg.DB_HOST = cast.ToString(coalesce("DB_HOST", "postgres1"))
 	cfg.DB_PORT = cast.ToInt(coalesce("DB_PORT", 5432))
 	cfg.DB_USER = cast.ToString(coalesce("DB_USER", "postgres"))
 	cfg.DB_NAME = cast.ToString(coalesce("DB_NAME", "medicine"))
-	cfg.DB_PASSWORD = cast.ToString(coalesce("DB_PASSWORD", "123"))
+	cfg.DB_PASSWORD = cast.ToString(coalesce("DB_PASSWORD", "BEKJONS"))
 	cfg.ACCESS_TOKEN = cast.ToString(coalesce("ACCESS_TOKEN", "access_key"))
 	cfg.REFRESH_TOKEN = cast.ToString(coalesce("REFRESH_TOKEN", "refresh_key"))
 
