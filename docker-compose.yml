@@ -2,44 +2,47 @@ version: '3.9'
 
 services:
 
-  postgres:
+
+  postgres-db:
     container_name: postgres1
-    image: postgres:latest
+    image: postgres
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=BEKJONS
+      - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=medicine
-    volumes:
-      - postgres_data:/data/postgres
     ports:
       - "5434:5432"
+    volumes:
+      - db:/data/postgres
     networks:
-      - auths
-      
+      - healthserve
+
+    
   migrate:
     image: migrate/migrate
     networks:
-      - auths
+      - healthserve
     volumes:
       - ./migrations:/migrations
-    command: [ "-path", "/migrations", "-database", "postgres://postgres:BEKJONS@postgres:5432/medicine?sslmode=disable", "up" ]
     depends_on:
-      - postgres
+      - postgres-db
+    command: ["-path", "/migrations", "-database" ,"postgres://postgres:1234@postgres:5432/medicine?sslmode=disable","up"]
 
-  auth-service:
+  userservice:
     container_name: auth
     build: .
-    depends_on:
-      - postgres
     ports:
       - "8081:8081"
-      - "50052:50052"
+      - "50051:50051"
     networks:
-      - auths
+     - healthserve
+    depends_on:
+      - postgres-db
 
 networks:
-  auths:
-    driver: bridge
+  healthserve:
+    external: true
+
 volumes:
-  postgres_data:
-  migrations:
+  db:
+  

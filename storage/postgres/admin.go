@@ -27,7 +27,7 @@ func (a *AdminRepo) GetProfile(ctx context.Context, id *pb.Id) (*pb.GetProfileRe
 		WHERE id = $1`
 
 	var user pb.GetProfileResponse
-	err := a.DB.QueryRowContext(ctx, query, id).Scan(
+	err := a.DB.QueryRowContext(ctx, query, id.UserId).Scan(
 		&user.Id,
 		&user.Email,
 		&user.FirstName,
